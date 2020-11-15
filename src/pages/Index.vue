@@ -16,7 +16,7 @@
           <q-radio v-model="targetOrExpenses" val="target" label="Target" />
           <q-radio v-model="targetOrExpenses" val="expenses" label="Expenses" />
         </div>
-        {{targetOrExpenses == 'target' ? `Target: ${savingTarget}€` : `Monthly expenses: ${monthlyExpenses}€ (target will be ${target}€)`}}
+        {{targetOrExpenses == 'target' ? `Target: ${savingTarget}€` : `Monthly expenses: ${monthlyExpenses}€ (target will be ${Math.round(target)}€)`}}
         <q-slider :min="10000" :max="1000000" v-model="savingTarget" flat dense v-if="targetOrExpenses == 'target'"/>
         <q-slider :min="300" :max="10000" v-model="monthlyExpenses" flat dense v-if="targetOrExpenses == 'expenses'"/>
       </div>
