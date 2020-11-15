@@ -1,56 +1,61 @@
 <template>
-  <q-page class="flex flex-center">
-    <div class="slider-sidebar">
-      <div class="slider">
-        Monthly saving: {{monthlySaving}}€
-        <q-slider :min="50" :max="10000" v-model="monthlySaving" flat dense />
-      </div>
-      <div class="slider">
-        Start amount: {{startAmount}}€
-        <q-slider :min="0" :max="10000" v-model="startAmount" flat dense />
-      </div>
-      <div class="slider">
-        <div>
-          Savings mode:
-          <HelpTooltip text="Target: Save until reaching a specific number Expenses: Save until returns >= expenses" />
-          <q-radio v-model="targetOrExpenses" val="target" label="Target" />
-          <q-radio v-model="targetOrExpenses" val="expenses" label="Expenses" />
-        </div>
-        {{targetOrExpenses == 'target' ? `Target: ${savingTarget}€` : `Monthly expenses: ${monthlyExpenses}€ (target will be ${Math.round(target)}€)`}}
-        <q-slider :min="10000" :max="1000000" v-model="savingTarget" flat dense v-if="targetOrExpenses == 'target'"/>
-        <q-slider :min="300" :max="10000" v-model="monthlyExpenses" flat dense v-if="targetOrExpenses == 'expenses'"/>
-      </div>
-      <div class="slider">
-        <span>
-          Yearly returns: <HelpTooltip text="How much do you expect your investments to grow each year?" />
-          {{yearlyReturn}}%
-        </span>
-        <q-slider :min="0" :max="50" :step="0.1" v-model="yearlyReturn" flat dense />
-      </div>
-      <div class="slider">
-        <div>
-          Returns mode:
-          <q-radio v-model="returnsMode" val="yearly" label="Yearly" />
-          <q-radio v-model="returnsMode" val="quarterly" label="Quarterly" />
-        </div>
-      </div>
-      <div class="slider">
-        <span>
-          Increase monthly saving every {{increaseMonthlyEvery}} months
-          <HelpTooltip text="Leave at 0 if you never want to increase the amount" />
-        </span>
-        <q-slider :min="0" :max="30" v-model="increaseMonthlyEvery" flat dense />
-      </div>
-      <div class="slider">
-        <span>
-          Increase monthly saving by {{increaseMonthlyBy}}
-          <HelpTooltip text="Related to the slider above" />
-        </span>
-        <q-slider :min="0" :max="1000" v-model="increaseMonthlyBy" flat dense />
-      </div>
+  <q-page class="flex flex-center" style="flex-direction:column;">
+    <div style="margin-top:-150px;margin-bottom:100px;">
+      This site is for calculating how much and how long you need to save to reach your financial independance goals
     </div>
-    <div class="saving-forecast">
-      Months until target reached: {{statusEveryMonth.length}} ({{`${Math.ceil(statusEveryMonth.length / 12)} years`}})
+    <div style="display:flex;flex-direction:row;justify-content:center;">
+      <div class="slider-sidebar">
+        <div class="slider">
+          Monthly saving: {{monthlySaving}}€
+          <q-slider :min="50" :max="10000" v-model="monthlySaving" flat dense />
+        </div>
+        <div class="slider">
+          Start amount: {{startAmount}}€
+          <q-slider :min="0" :max="10000" v-model="startAmount" flat dense />
+        </div>
+        <div class="slider">
+          <div>
+            Savings mode:
+            <HelpTooltip text="Target: Save until reaching a specific number Expenses: Save until returns >= expenses" />
+            <q-radio v-model="targetOrExpenses" val="target" label="Target" />
+            <q-radio v-model="targetOrExpenses" val="expenses" label="Expenses" />
+          </div>
+          {{targetOrExpenses == 'target' ? `Target: ${savingTarget}€` : `Monthly expenses: ${monthlyExpenses}€ (target will be ${Math.round(target)}€)`}}
+          <q-slider :min="10000" :max="1000000" v-model="savingTarget" flat dense v-if="targetOrExpenses == 'target'"/>
+          <q-slider :min="300" :max="10000" v-model="monthlyExpenses" flat dense v-if="targetOrExpenses == 'expenses'"/>
+        </div>
+        <div class="slider">
+          <span>
+            Annual returns: <HelpTooltip text="How much do you expect your investments to grow each year?" />
+            {{yearlyReturn}}%
+          </span>
+          <q-slider :min="0" :max="50" :step="0.1" v-model="yearlyReturn" flat dense />
+        </div>
+        <div class="slider">
+          <div>
+            Returns mode:
+            <q-radio v-model="returnsMode" val="yearly" label="Annual" />
+            <q-radio v-model="returnsMode" val="quarterly" label="Quarterly" />
+          </div>
+        </div>
+        <div class="slider">
+          <span>
+            Increase monthly saving every {{increaseMonthlyEvery}} months
+            <HelpTooltip text="Leave at 0 if you never want to increase the amount" />
+          </span>
+          <q-slider :min="0" :max="50" v-model="increaseMonthlyEvery" flat dense />
+        </div>
+        <div class="slider">
+          <span>
+            Increase monthly saving by {{increaseMonthlyBy}}
+            <HelpTooltip text="Related to the slider above" />
+          </span>
+          <q-slider :min="0" :max="1000" v-model="increaseMonthlyBy" flat dense :disable="increaseMonthlyEvery == 0"/>
+        </div>
+      </div>
+      <div class="saving-forecast">
+        Months until target reached: {{statusEveryMonth.length}} ({{`${Math.ceil(statusEveryMonth.length / 12)} years`}})
+      </div>
     </div>
   </q-page>
 </template>
@@ -72,7 +77,7 @@ export default {
       savingTarget: 10000,
       yearlyReturn: 5,
       monthlyExpenses: 2000,
-      targetOrExpenses: 'target',
+      targetOrExpenses: 'expenses',
       increaseMonthlyEvery: 0,
       increaseMonthlyBy: 50,
       returnsMode: 'yearly',
@@ -192,8 +197,9 @@ export default {
 .saving-forecast {
   display:flex;
   flex-direction:column;
-  width: 600px;
+  width: 460px;
   justify-content: center;
+  text-align: center;
   margin-left: 30px;
 }
 </style>
