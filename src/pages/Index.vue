@@ -92,7 +92,8 @@ export default {
         i += 1
         if (this.increaseMonthlyEvery > 0 && i % this.increaseMonthlyEvery === 0) mSave += this.increaseMonthlyBy
         saved += mSave
-        if (i % 12 == 0) saved *= (1 + this.yearlyReturn * 0.01)
+        if (i % 12 == 0 && this.returnsMode === 'yearly') saved *= (1 + this.yearlyReturn * 0.01)
+        else if (i % 4 == 0 && this.returnsMode === 'quarterly') saved *= (1 + this.yearlyReturn * 0.01 * 0.25)
         status.push(saved)
       }
       return status
