@@ -2,7 +2,7 @@
   "name": "savings-forecast",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "Calculate how long and how much you have to safe for financial independance",
+  "productName": "Calculate how long and how much you have to save for financial independance",
   "author": "Tadeas Paule <tpaule.personal@gmail.com>",
   "private": true,
   "scripts": {

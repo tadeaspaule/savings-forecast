@@ -115,8 +115,8 @@ module.exports = function (/* ctx */) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'Calculate how long and how much you have to safe for financial independance',
-        short_name: 'Calculate how long and how much you have to safe for financial independance',
+        name: 'Calculate how long and how much you have to save for financial independance',
+        short_name: 'Calculate how long and how much you have to save for financial independance',
         description: 'A Quasar Framework app',
         display: 'standalone',
         orientation: 'portrait',
