@@ -7,7 +7,7 @@
       <div class="slider-sidebar">
         <div class="slider">
           Monthly saving: {{monthlySaving}}€
-          <q-slider :min="50" :max="10000" v-model="monthlySaving" flat dense />
+          <q-slider :min="0" :max="10000" v-model="monthlySaving" flat dense />
         </div>
         <div class="slider">
           Start amount: {{startAmount}}€
@@ -89,6 +89,8 @@ export default {
       return this.targetOrExpenses === 'target' ? this.savingTarget : (this.monthlyExpenses * 12) / (this.yearlyReturn * 0.01)
     },
     statusEveryMonth () {
+      // check against infinite while loop (if start with 0 and no ways to increase that in absolute terms, no matter how high the interest it will never reach target)
+      if (this.monthlySaving == 0 && this.startAmount == 0 && (this.increaseMonthlyEvery == 0 || this.increaseMonthlyBy == 0)) return []
       var i = 0
       var saved = this.startAmount
       var mSave = this.monthlySaving
