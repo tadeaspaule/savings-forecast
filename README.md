@@ -1,1 +1,1 @@
-Check out the deployed version [here](https://tadeaspaule.github.io/savings-forecast-ghp/#/).
+Simple interactive tool to calculate how much and how long to save to achieve financial goals, whether that be complete financial independance or just a specific target amount
