@@ -13,6 +13,10 @@
           Start amount: {{startAmount}}€
           <q-slider :min="0" :max="10000" v-model="startAmount" flat dense />
         </div>
+        <div class="slider" style="flex-direction: row;">
+          <q-checkbox left-label label="Investing during saving phase" v-model="investingDuringSaving" flat dense />
+          <q-space />
+        </div>
         <div class="slider">
           <div>
             Savings mode:
@@ -72,11 +76,12 @@ export default {
   },
   data () {
     return {
-      monthlySaving: 100,
+      monthlySaving: 500,
       startAmount: 0,
+      investingDuringSaving: true,
       savingTarget: 10000,
       yearlyReturn: 5,
-      monthlyExpenses: 2000,
+      monthlyExpenses: 1500,
       targetOrExpenses: 'expenses',
       increaseMonthlyEvery: 0,
       increaseMonthlyBy: 50,
@@ -99,8 +104,10 @@ export default {
         i += 1
         if (this.increaseMonthlyEvery > 0 && i % this.increaseMonthlyEvery === 0) mSave += this.increaseMonthlyBy
         saved += mSave
-        if (i % 12 == 0 && this.returnsMode === 'yearly') saved *= (1 + this.yearlyReturn * 0.01)
-        else if (i % 4 == 0 && this.returnsMode === 'quarterly') saved *= (1 + this.yearlyReturn * 0.01 * 0.25)
+        if (this.investingDuringSaving) {
+          if (i % 12 == 0 && this.returnsMode === 'yearly') saved *= (1 + this.yearlyReturn * 0.01)
+          else if (i % 4 == 0 && this.returnsMode === 'quarterly') saved *= (1 + this.yearlyReturn * 0.01 * 0.25)
+        }
         status.push(saved)
       }
       return status
